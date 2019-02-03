@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Routing;
 using OdeToFood.Services;
-using OdeToFood.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace OdeToFood
@@ -29,9 +28,7 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();
-            services.AddDbContext<OdeToFoodDbContext>(
-                options => options.UseSqlServer(_configuration.GetConnectionString("OdeToFood")));
-            services.AddScoped<IRestaurantData, SqlRestaurantData>();
+            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
             services.AddMvc();
         }
 
